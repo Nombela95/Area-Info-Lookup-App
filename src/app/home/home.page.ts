@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular'; // Import ToastController
+import { IonicModule, ToastController } from '@ionic/angular'; 
+import { WeatherService } from '../services/weather.service';
+import { environment } from '../../environments/environment';
+import { finalize } from 'rxjs/operators';
 
-// Define interfaces for cleaner code (optional but recommended)
 interface WeatherData {
   name: string;
   main: {
@@ -11,7 +13,7 @@ interface WeatherData {
   };
   weather: {
     description: string;
-    icon: string; // We might use this later
+    icon: string;
   }[];
   wind: {
     speed: number;
@@ -20,25 +22,29 @@ interface WeatherData {
 
 interface FavoriteLocation {
     name: string;
-    weather?: WeatherData | null; // To store weather later
+    weather?: WeatherData | null; 
 }
+
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule] // Add CommonModule and FormsModule
+  imports: [IonicModule, CommonModule, FormsModule] 
 })
 export class HomePage implements OnInit {
 
-  searchCity: string = ''; // Will bind to input later
+  searchCity: string = ''; 
   currentWeather: WeatherData | null = null;
-  favorites: FavoriteLocation[] = []; // Will hold favorite cities
+  favorites: FavoriteLocation[] = []; 
   isLoading: boolean = false;
   errorMessage: string | null = null;
 
-  constructor(private toastController: ToastController) {} // Inject ToastController
+  constructor(
+    private toastController: ToastController,
+    private weatherService: WeatherService
+  ) {}
 
   ngOnInit() {
     // Load favorites when the component initializes
@@ -46,24 +52,41 @@ export class HomePage implements OnInit {
   }
 
   searchWeather() {
-    console.log('Search button clicked. City:', this.searchCity);
-    // API call logic will go here in the next step
-    this.errorMessage = null; // Reset error on new search
+    this.errorMessage = null;
     this.currentWeather = null; // Clear previous results
-     if (!this.searchCity.trim()) {
-         this.presentToast('Please enter a city name.');
-         return;
-     }
-     // Mock loading state for now
-     this.isLoading = true;
-     setTimeout(() => { // Simulate API call delay
-         this.isLoading = false;
-         console.log('Simulated API call finished.');
-          // Mock error for testing
-          // this.errorMessage = 'Could not fetch weather data.';
-          // Mock success for testing
-          // this.currentWeather = { name: this.searchCity, main: { temp: 25 }, weather: [{ description: 'clear sky', icon: '01d' }], wind: { speed: 3.5 } };
-     }, 1500);
+    if (!this.searchCity || !this.searchCity.trim()) {
+      this.presentToast('Please enter a city name.');
+      return;
+    }
+
+    this.isLoading = true;
+    const cityToSearch = this.searchCity.trim(); // Use trimmed value
+
+    this.weatherService.getWeather(cityToSearch)
+      .pipe(
+        finalize(() => { // This block executes whether the observable completes or errors
+          this.isLoading = false;
+          console.log('Weather fetch attempt finished.');
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          console.log('Weather data fetched successfully:', data);
+          // Adapt this if your WeatherData interface differs slightly from API response
+          this.currentWeather = {
+              name: data.name,
+              main: { temp: data.main.temp },
+              weather: [{ description: data.weather[0]?.description || 'N/A', icon: data.weather[0]?.icon || '' }],
+              wind: { speed: data.wind.speed }
+          };
+          this.errorMessage = null;
+        },
+        error: (error) => {
+          console.error('Error fetching weather:', error);
+          this.errorMessage = error.message || 'Failed to fetch weather data. Please try again.';
+          this.currentWeather = null;
+        }
+      });
   }
 
   saveFavorite() {
@@ -89,4 +112,5 @@ export class HomePage implements OnInit {
     });
     toast.present();
   }
+
 }
