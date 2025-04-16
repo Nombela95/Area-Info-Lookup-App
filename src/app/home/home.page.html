@@ -1,20 +1,58 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Weather Scope
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Area Weather Info</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-item>
+    <ion-label position="floating">Enter City Name</ion-label>
+    <ion-input type="text" placeholder="e.g., Johannesburg" [(ngModel)]="searchCity"  (keyup.enter)="searchWeather()"></ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)="searchWeather()">Search</ion-button>
+
+  <hr>
+
+  <h2>Current Weather</h2>
+  <div *ngIf="!currentWeather && !isLoading && !errorMessage">
+    <p>Enter a city above to see the weather.</p>
   </div>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <ion-card *ngIf="currentWeather && !isLoading">
+    <ion-card-header>
+      <ion-card-title>{{ currentWeather.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Temperature: {{ currentWeather.main.temp }} °C</p>
+      <p>Condition: {{ currentWeather.weather[0].description }}</p>
+      <p>Wind: {{ currentWeather.wind.speed }} m/s</p>
+      <ion-button fill="outline" (click)="saveFavorite()">Save to Favorites</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+   <div *ngIf="errorMessage && !isLoading">
+      <p style="color: red;">Error: {{ errorMessage }}</p>
+   </div>
+  <hr>
+
+  <h2>Favorites</h2>
+  <ion-list *ngIf="favorites.length > 0">
+     <ion-item *ngFor="let fav of favorites">
+        <ion-label>{{ fav.name }}</ion-label>
+        </ion-item>
+  </ion-list>
+  <div *ngIf="favorites.length === 0">
+    <p>No favorite locations saved yet.</p>
+  </div>
+
 </ion-content>
