@@ -81,15 +81,12 @@
           <div class="location-header">
             <h2 class="ion-text-center location-name">
               {{ currentWeather.name }}
+              <div class="main-temperature">
+                {{ currentWeather.main.temp }}°C
+              </div>
             </h2>
-            <div class="weather-icon-container">
-              <ion-icon
-                [name]="getWeatherIcon(currentWeather.weather[0].main)"
-                class="weather-icon"
-              ></ion-icon>
-            </div>
           </div>
-
+          
           <ion-grid class="weather-grid">
             <ion-row>
               <ion-col size="12" class="weather-data-item">

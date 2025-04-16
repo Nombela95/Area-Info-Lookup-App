@@ -65,7 +65,7 @@
     --background: transparent !important;
     background-color: transparent !important;
   }
-  
+
   .header-gradient {
     background: var(--ion-color-primary);
     
@@ -88,6 +88,12 @@
   
   .content-bg {
     --background: transparent;
+  }
+
+  .main-temperature {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin: 8px 0;
   }
   
   .search-section {
