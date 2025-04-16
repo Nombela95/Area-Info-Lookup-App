@@ -1,18 +1,18 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
+// /*
+//  * App Global CSS
+//  * ----------------------------------------------------------------------------
+//  * Put style rules here that you want to apply globally. These styles are for
+//  * the entire app and not just one component. Additionally, this file can be
+//  * used as an entry point to import other CSS/Sass files to be included in the
+//  * output CSS.
+//  * For more information on global stylesheets, visit the documentation:
+//  * https://ionicframework.com/docs/layout/global-stylesheets
+//  */
 
-/* Core CSS required for Ionic components to work properly */
+// /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
-/* Basic CSS for apps built with Ionic */
+// /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
@@ -34,4 +34,320 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Color Variables */
+:root {
+    --ion-color-primary: #3880ff;
+    --ion-color-primary-rgb: 56, 128, 255;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #3171e0;
+    --ion-color-primary-tint: #4c8dff;
+    
+    /* Custom Colors */
+    --sunny-gradient: linear-gradient(135deg, #ff9a44, #ffd53e);
+    --rainy-gradient: linear-gradient(135deg, #4b6cb7, #182848);
+    --cloudy-gradient: linear-gradient(135deg, #bdc3c7, #2c3e50);
+    --thunder-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  }
+
+  html, body, ion-app {
+    background-image: url('/assets/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  
+  ion-content {
+    --background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  .header-gradient {
+    background: var(--ion-color-primary);
+    
+    ion-toolbar {
+      --background: transparent;
+      --color: black;
+    }
+    
+    .app-title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      
+      .title-icon {
+        margin-right: 8px;
+        font-size: 1.2em;
+      }
+    }
+  }
+  
+  .content-bg {
+    --background: transparent;
+  }
+  
+  .search-section {
+    background: transparent;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+    
+    .custom-searchbar {
+      --background: #f1f3f6;
+      --border-radius: 12px;
+      --box-shadow: none;
+      padding: 0;
+    }
+    
+    .search-button {
+      --box-shadow: none;
+      height: 46px;
+      margin-top: 12px;
+    }
+    
+    .current-location {
+      text-align: center;
+      margin-top: 8px;
+      
+      ion-button {
+        --color: var(--ion-color-medium);
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .search-card {
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 16px;
+  }
+  
+  .input-label h2 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  
+  .weather-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 16px;
+    color: black;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    
+    .weather-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.2);
+      z-index: -1;
+    }
+    
+    ion-card-header {
+      padding-bottom: 8px;
+      
+      .location {
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        ion-icon {
+          font-size: 1.6rem;
+          cursor: pointer;
+        }
+      }
+      
+      .date {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+    }
+    
+    .weather-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0;
+      
+      .temperature {
+        font-size: 3.5rem;
+        font-weight: 300;
+        line-height: 1;
+        
+        .unit {
+          font-size: 1.5rem;
+          vertical-align: super;
+        }
+      }
+      
+      .weather-condition {
+        text-align: right;
+        
+        ion-icon {
+          font-size: 2.5rem;
+          margin-bottom: 4px;
+        }
+        
+        span {
+          display: block;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    .weather-details {
+      background: rgba(255, 255, 255, 0.023);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 16px;
+      
+      .detail-item {
+        text-align: center;
+        color: black;
+        
+        ion-icon {
+          font-size: 1.4rem;
+          margin-bottom: 4px;
+        }
+        
+        div {
+          font-size: 0.7rem;
+          opacity: 0.8;
+          margin-bottom: 2px;
+        }
+        
+        strong {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  .sunny-card {
+    background: var(--sunny-gradient);
+    
+    ion-icon[name="sunny"],
+    ion-icon[name="partly-sunny"] {
+      color: #ffeb3b;
+    }
+  }
+  
+  .rainy-card {
+    background: var(--rainy-gradient);
+    
+    ion-icon[name="rainy"] {
+      color: #bbdefb;
+    }
+  }
+  
+  .cloudy-card {
+    background: var(--cloudy-gradient);
+    
+    ion-icon[name="cloudy"] {
+      color: #e0e0e0;
+    }
+  }
+  
+  .thunder-card {
+    background: var(--thunder-gradient);
+    
+    ion-icon[name="thunderstorm"] {
+      color: #ffeb3b;
+    }
+  }
+  
+  .favorites-card {
+    border-radius: 16px;
+    margin: 16px;
+    
+    ion-card-header {
+      padding-bottom: 0;
+      
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        
+        ion-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+    
+    .favorites-list {
+      background: transparent;
+      padding: 0;
+      
+      .favorite-item {
+        --background: transparent;
+        --border-radius: 12px;
+        margin-bottom: 8px;
+        --padding-start: 12px;
+        --inner-padding-end: 12px;
+        
+        ion-icon {
+          font-size: 1.4rem;
+        }
+        
+        h2 {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+        
+        p {
+          font-size: 0.8rem;
+          color: var(--ion-color-medium);
+          
+          ion-icon {
+            font-size: 0.9rem;
+            vertical-align: middle;
+            margin-right: 2px;
+          }
+        }
+        
+        ion-badge {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  
+  .empty-state, .loading-state, .error-state {
+    text-align: center;
+    padding: 40px 16px;
+    
+    ion-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    
+    p {
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+    }
+  }
+  
+  .error-state {
+    ion-icon {
+      color: var(--ion-color-danger);
+    }
+    
+    h3 {
+      color: var(--ion-color-danger);
+    }
+  }
