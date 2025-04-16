@@ -1,0 +1,7 @@
+{
+  "name": "area-info-lookup",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
